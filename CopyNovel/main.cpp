@@ -191,6 +191,19 @@ std::string SplitHtmlContentToNovelPart(std::string& htmlContent) {
                 result.replace(pos, 6, "");
                 pos = result.find("<br />", pos);
             }
+
+            // 删除 <p> 和 </p> 标签
+            pos = result.find("<p>");
+            while (pos != std::string::npos) {
+                result.replace(pos, 3, "");
+                pos = result.find("<p>", pos);
+            }
+
+            pos = result.find("</p>");
+            while (pos != std::string::npos) {
+                result.replace(pos, 4, "");
+                pos = result.find("</p>", pos);
+            }
         }
         else {
             std::cerr << "End tag not found in the HTML content." << std::endl;
@@ -202,6 +215,7 @@ std::string SplitHtmlContentToNovelPart(std::string& htmlContent) {
     RemoveDivContent(result);
     return result;
 }
+
 
 // 方法：将小说正文追加写入文件
 void AppendNovelContentToFile(const std::string& novelContent, const std::string& fileName) {
